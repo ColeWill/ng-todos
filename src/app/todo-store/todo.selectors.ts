@@ -17,3 +17,13 @@ export const selectTodosError = createSelector(
   selectTodoState,
   (state: TodoState) => state.error
 );
+
+export const selectCompletedTodos = createSelector(
+  selectTodoState,
+  (state: TodoState) => state.todos.filter((todo) => todo.completed)
+);
+
+export const selectIncompleteTodos = createSelector(
+  selectTodoState,
+  (state: TodoState) => state.todos.filter((todo) => !todo.completed)
+);

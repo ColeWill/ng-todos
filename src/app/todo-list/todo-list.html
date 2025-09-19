@@ -9,15 +9,11 @@
   } @if(error$ | async){
   <span> There was an error!</span>
   }
-  <ul>
-    @for(todo of todos$ | async; track todo.id){
-    <li>
-      <span class="text"> {{ todo.id }}: </span>
-      {{ todo.todo }}
-      <span>
-        {{ todo.completed }}
-      </span>
-    </li>
+  <div class="grid grid-cols-2 gap-2">
+    @if((completedTodos$ |async ); as completedTodos){
+    <app-todo-list-li [todoList]="completedTodos"></app-todo-list-li>
+    } @if((incompleteTodos$ | async); as incompleteTodos){
+    <app-todo-list-li [todoList]="incompleteTodos"></app-todo-list-li>
     }
-  </ul>
+  </div>
 </div>

@@ -2,7 +2,14 @@ import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
-import { map, mergeMap, catchError, delay, tap } from 'rxjs/operators';
+import {
+  map,
+  mergeMap,
+  catchError,
+  delay,
+  tap,
+  startWith,
+} from 'rxjs/operators';
 import * as TodoActions from './todo.actions';
 import { Todo } from './todo.model';
 
@@ -39,6 +46,7 @@ export class TodosEffects {
         return this.http
           .get<DummyJsonResponse>('https://dummyjson.com/todos')
           .pipe(
+            // startWith([]),
             delay(2000),
             map((response) =>
               TodoActions.loadTodosSuccess({ todos: response.todos })

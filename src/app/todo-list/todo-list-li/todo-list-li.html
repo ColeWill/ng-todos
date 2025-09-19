@@ -1,0 +1,8 @@
+<ul>
+  @for(todo of todoList(); track todo.id){
+  <li>
+    <span class="text"> {{ todo.id }}: </span>
+    {{ todo.todo }}
+  </li>
+  }
+</ul>
