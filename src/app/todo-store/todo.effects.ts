@@ -22,9 +22,6 @@ export class TodosEffects {
     if (!this.http) {
       console.warn('HttpClient is not injected');
     }
-    if (this.http) {
-      console.info('http is injected');
-    }
   }
 
   loadTodos$ = createEffect(() =>
@@ -42,6 +39,7 @@ export class TodosEffects {
         return this.http
           .get<DummyJsonResponse>('https://dummyjson.com/todos')
           .pipe(
+            delay(5000),
             map((response) =>
               TodoActions.loadTodosSuccess({ todos: response.todos })
             ),

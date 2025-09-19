@@ -19,7 +19,6 @@ export const initialState: TodoState = {
 export const todoReducer = createReducer(
   initialState,
   on(TodoActions.loadTodos, (state) => {
-    console.log('state in reducer:', state);
     return {
       ...state,
       loading: true,

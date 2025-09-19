@@ -14,19 +14,17 @@ import { CommonModule } from '@angular/common';
 })
 export class TodoList implements OnInit {
   todos$: Observable<Todo[]>;
-  // loading: Observable<boolean>;
-  // error$: Observable<string | null>;
+  loading$: Observable<boolean>;
+  error$: Observable<string | null>;
 
   constructor(private store: Store) {
     this.todos$ = this.store.select(TodoSelectors.selectAllTodos);
-
-    this.todos$.subscribe({
-      next: (data) => console.log('todos$ from store:', data),
-      error: (err) => console.log(err),
-    });
+    this.error$ = this.store.select(TodoSelectors.selectTodosError);
+    this.loading$ = this.store.select(TodoSelectors.selectTodosLoading);
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+  fetchTodos(): void {
     this.store.dispatch(TodoActions.loadTodos());
   }
 }
