@@ -1,1 +1,13 @@
-<p>todo-list works!</p>
+<div>
+  <ul>
+    @for(todo of todos$ | async; track todo.id){
+    <li>
+      <span class="text"> {{ todo.id }}: </span>
+      {{ todo.todo }}
+      <span>
+        {{ todo.completed }}
+      </span>
+    </li>
+    }
+  </ul>
+</div>

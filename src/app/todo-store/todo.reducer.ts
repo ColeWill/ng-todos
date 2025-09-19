@@ -18,11 +18,22 @@ export const initialState: TodoState = {
 
 export const todoReducer = createReducer(
   initialState,
-  on(TodoActions.loadTodos, (state) => ({
-    ...state,
-    loading: true,
-    error: null,
-  }))
+  on(TodoActions.loadTodos, (state) => {
+    console.log('state in reducer:', state);
+    return {
+      ...state,
+      loading: true,
+      error: null,
+    };
+  }),
+  on(TodoActions.loadTodosSuccess, (state, { todos }) => {
+    return {
+      ...state,
+      todos,
+      loading: false,
+      error: null,
+    };
+  })
 
   //
 );

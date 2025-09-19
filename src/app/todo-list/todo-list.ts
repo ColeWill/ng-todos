@@ -4,10 +4,11 @@ import { Todo } from '../todo-store/todo.model';
 import { Store } from '@ngrx/store';
 import * as TodoActions from '../todo-store/todo.actions';
 import * as TodoSelectors from '../todo-store/todo.selectors';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-todo-list',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './todo-list.html',
   styleUrl: './todo-list.scss',
 })
@@ -18,8 +19,9 @@ export class TodoList implements OnInit {
 
   constructor(private store: Store) {
     this.todos$ = this.store.select(TodoSelectors.selectAllTodos);
+
     this.todos$.subscribe({
-      next: (data) => console.log(data),
+      next: (data) => console.log('todos$ from store:', data),
       error: (err) => console.log(err),
     });
   }
