@@ -14,29 +14,22 @@ interface DummyJsonResponse {
 }
 
 @Injectable()
-export class TodoEffects {
-  constructor(private actions$: Actions, private http: HttpClient) {}
-
+export class TodosEffects {
   loadTodos$ = createEffect(() =>
     this.actions$.pipe(
       ofType(TodoActions.loadTodos),
-      tap(() => console.log('Loading todos from API....')),
       mergeMap(() =>
-        this.http.get<DummyJsonResponse>('https://dummyjson.com/todos').pipe(
-          delay(500),
+        this.http.get<{ todos: Todo[] }>('https://dummyjson.com/todos').pipe(
           map((response) =>
             TodoActions.loadTodosSuccess({ todos: response.todos })
           ),
-          catchError((error) => {
-            console.error('Error loading todos:', error);
-            return of(
-              TodoActions.loadTodosFailure({
-                error: 'Failed to load todos. Please try again',
-              })
-            );
-          })
+          catchError((error) =>
+            of(TodoActions.loadTodosFailure({ error: error.message }))
+          )
         )
       )
     )
   );
+
+  constructor(private actions$: Actions, private http: HttpClient) {}
 }

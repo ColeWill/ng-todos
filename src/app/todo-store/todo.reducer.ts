@@ -18,17 +18,10 @@ export const initialState: TodoState = {
 
 export const todoReducer = createReducer(
   initialState,
-  on(TodoActions.addTodo, (state, { text }) => ({
+  on(TodoActions.loadTodos, (state) => ({
     ...state,
-    todos: [
-      ...state.todos,
-      {
-        id: Math.max(...state.todos.map((t) => t.id), 0) + 1,
-        text,
-        completed: false,
-        userId: 1,
-      },
-    ],
+    loading: true,
+    error: null,
   }))
 
   //
