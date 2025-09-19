@@ -26,14 +26,11 @@
     "@angular/forms": "^20.1.0",
     "@angular/platform-browser": "^20.1.0",
     "@angular/router": "^20.1.0",
-<<<<<<< HEAD
     "@ngrx/effects": "^20.0.1",
     "@ngrx/store": "^20.0.1",
     "@ngrx/store-devtools": "^20.0.1",
-=======
     "@tailwindcss/postcss": "^4.1.13",
     "postcss": "^8.5.6",
->>>>>>> install-tailwind
     "rxjs": "~7.8.0",
     "tailwindcss": "^4.1.13",
     "tslib": "^2.3.0",
