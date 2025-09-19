@@ -1,9 +1,17 @@
 <div class="min-h-screen bg-gray-800 text-white">
-  <h1 class="bg-gray-700 text-center rounded p-7 text-3xl">NG Todos</h1>
+  <header class="bg-gray-700 p-4">
+    <h1 class="text-center text-3xl">NG Todos</h1>
+    <button routerLink="todos" class="border rounded-sm p-2 cursor-pointer">
+      Todo List Component
+    </button>
+    <button
+      routerLink="createTodos"
+      class="border rounded-sm p-2 cursor-pointer"
+    >
+      Create Todos
+    </button>
+  </header>
   <div class="m-4">
-    <app-todo-form></app-todo-form>
-    <app-todo-list></app-todo-list>
+    <router-outlet />
   </div>
-
-  <router-outlet />
 </div>

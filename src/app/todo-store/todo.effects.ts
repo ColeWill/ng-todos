@@ -39,7 +39,7 @@ export class TodosEffects {
         return this.http
           .get<DummyJsonResponse>('https://dummyjson.com/todos')
           .pipe(
-            delay(5000),
+            delay(2000),
             map((response) =>
               TodoActions.loadTodosSuccess({ todos: response.todos })
             ),
