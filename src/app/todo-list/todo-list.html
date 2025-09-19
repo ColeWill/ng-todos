@@ -1,0 +1,23 @@
+<div>
+  @if((todos$ | async); as todos){ @if(todos.length === 0){ @if(!(loading$ |
+  async)){
+  <button class="border rounded-sm p-2 cursor-pointer" (click)="fetchTodos()">
+    Load All Todos
+  </button>
+  } } } @if(loading$ | async){
+  <span> Todos are loading...</span>
+  } @if(error$ | async){
+  <span> There was an error!</span>
+  }
+  <ul>
+    @for(todo of todos$ | async; track todo.id){
+    <li>
+      <span class="text"> {{ todo.id }}: </span>
+      {{ todo.todo }}
+      <span>
+        {{ todo.completed }}
+      </span>
+    </li>
+    }
+  </ul>
+</div>
