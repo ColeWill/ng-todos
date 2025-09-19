@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Todo } from '../../todo-store/todo.model';
 import { CommonModule } from '@angular/common';
 
@@ -10,4 +10,5 @@ import { CommonModule } from '@angular/common';
 })
 export class TodoListLi {
   todoList = input.required<Todo[]>();
+  toggleComplete = output<number>();
 }

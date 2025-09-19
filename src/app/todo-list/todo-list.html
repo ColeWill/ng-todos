@@ -1,19 +1,42 @@
-<div>
-  @if((todos$ | async); as todos){ @if(todos.length === 0){ @if(!(loading$ |
-  async)){
-  <button class="border rounded-sm p-2 cursor-pointer" (click)="fetchTodos()">
-    Load All Todos
-  </button>
-  } } } @if(loading$ | async){
-  <span> Todos are loading...</span>
-  } @if(error$ | async){
-  <span> There was an error!</span>
+<div class="px-3">
+  @if (loading$ | async) {
+    <span> Todos are loading...</span>
   }
-  <div class="grid grid-cols-2 gap-2">
-    @if((completedTodos$ |async ); as completedTodos){
-    <app-todo-list-li [todoList]="completedTodos"></app-todo-list-li>
-    } @if((incompleteTodos$ | async); as incompleteTodos){
-    <app-todo-list-li [todoList]="incompleteTodos"></app-todo-list-li>
+  @if (error$ | async) {
+    <span> There was an error!</span>
+  }
+  @if (todos$ | async; as todos) {
+    @if (todos.length === 0) {
+      @if (!(loading$ | async)) {
+        <button
+          class="border rounded-sm p-2 cursor-pointer"
+          (click)="fetchTodos()"
+        >
+          Load All Todos
+        </button>
+      }
     }
-  </div>
+    @if (todos.length > 0) {
+      <div class="grid grid-cols-2 gap-2">
+        <section>
+          @if (incompleteTodos$ | async; as incompleteTodos) {
+            <h3 class="text-2xl pb-3">Todos</h3>
+            <app-todo-list-li
+              [todoList]="incompleteTodos"
+              (toggleComplete)="onToggleComplete($event)"
+            ></app-todo-list-li>
+          }
+        </section>
+        <section>
+          @if (completedTodos$ | async; as completedTodos) {
+            <h3 class="text-2xl pb-3">Completed Todos</h3>
+            <app-todo-list-li
+              [todoList]="completedTodos"
+              (toggleComplete)="onToggleComplete($event)"
+            ></app-todo-list-li>
+          }
+        </section>
+      </div>
+    }
+  }
 </div>

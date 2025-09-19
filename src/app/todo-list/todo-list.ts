@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Todo } from '../todo-store/todo.model';
 import { Store } from '@ngrx/store';
@@ -23,10 +23,10 @@ export class TodoList implements OnInit {
   constructor(private store: Store) {
     this.todos$ = this.store.select(TodoSelectors.selectAllTodos);
     this.incompleteTodos$ = this.store.select(
-      TodoSelectors.selectIncompleteTodos
+      TodoSelectors.selectIncompleteTodos,
     );
     this.completedTodos$ = this.store.select(
-      TodoSelectors.selectCompletedTodos
+      TodoSelectors.selectCompletedTodos,
     );
     this.error$ = this.store.select(TodoSelectors.selectTodosError);
     this.loading$ = this.store.select(TodoSelectors.selectTodosLoading);
@@ -35,5 +35,9 @@ export class TodoList implements OnInit {
   ngOnInit(): void {}
   fetchTodos(): void {
     this.store.dispatch(TodoActions.loadTodos());
+  }
+
+  onToggleComplete(todoId: number): void {
+    console.log('toggle this id:', todoId);
   }
 }
