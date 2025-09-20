@@ -1,0 +1,15 @@
+<ul>
+  @for (todo of todoList(); track todo.id) {
+    <li>
+      <span class="text"> {{ todo.id }}: </span>
+      {{ todo.todo }}
+      <span>
+        <input
+          type="checkbox"
+          [checked]="todo.completed"
+          (change)="toggleComplete.emit(todo.id)"
+        />
+      </span>
+    </li>
+  }
+</ul>
