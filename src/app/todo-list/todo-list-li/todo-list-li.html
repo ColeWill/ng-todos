@@ -1,14 +1,15 @@
 <ul>
   @for (todo of todoList(); track todo.id) {
-    <li>
-      <span class="text"> {{ todo.id }}: </span>
-      {{ todo.todo }}
-      <span>
-        <input
-          type="checkbox"
-          [checked]="todo.completed"
-          (change)="toggleComplete.emit(todo.id)"
-        />
+    <li class="flex flex-row align-middle">
+      <input
+        class="h-5 w-5 text-blue-500 rounded focus:ring-blue-500 mr-2"
+        type="checkbox"
+        [checked]="todo.completed"
+        (change)="toggleComplete.emit(todo.id)"
+      />
+      <span [ngClass]="{ 'line-through text-gray-300': todo.completed }">
+        {{ todo.id }}:
+        {{ todo.todo }}
       </span>
     </li>
   }
