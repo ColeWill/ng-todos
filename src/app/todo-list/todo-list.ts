@@ -37,7 +37,7 @@ export class TodoList implements OnInit {
     this.store.dispatch(TodoActions.loadTodos());
   }
 
-  onToggleComplete(todoId: number): void {
-    console.log('toggle this id:', todoId);
+  onToggleTodo(todoId: number): void {
+    this.store.dispatch(TodoActions.toggleTodo({ id: todoId }));
   }
 }

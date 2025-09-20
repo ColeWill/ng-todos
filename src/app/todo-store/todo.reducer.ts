@@ -32,7 +32,20 @@ export const todoReducer = createReducer(
       loading: false,
       error: null,
     };
-  })
+  }),
+  on(TodoActions.toggleTodo, (state, { id }) => {
+    const mutatedTodos: Todo[] = state.todos.map(
+      (todo): Todo =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo,
+    );
+
+    return {
+      ...state,
+      todos: mutatedTodos,
+      loading: false,
+      error: null,
+    };
+  }),
 
   //
 );

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-todo-list-li',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './todo-list-li.html',
   styleUrl: './todo-list-li.scss',

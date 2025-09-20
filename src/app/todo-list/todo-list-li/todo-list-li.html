@@ -7,7 +7,7 @@
         <input
           type="checkbox"
           [checked]="todo.completed"
-          (click)="toggleComplete.emit(todo.id)"
+          (change)="toggleComplete.emit(todo.id)"
         />
       </span>
     </li>
