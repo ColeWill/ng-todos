@@ -48,9 +48,19 @@ export class TodosEffects {
           .pipe(
             // startWith([]),
             delay(0),
-            map((response) =>
-              TodoActions.loadTodosSuccess({ todos: response.todos }),
-            ),
+            map((response) => {
+              const updatedTodos = response.todos.map((todo) => {
+                const createdAt = new Date().toISOString();
+                const dueDate = new Date();
+                dueDate.setDate(dueDate.getDate() + 7);
+                return {
+                  ...todo,
+                  createdAt,
+                  dueDate: dueDate.toISOString(),
+                };
+              });
+              return TodoActions.loadTodosSuccess({ todos: updatedTodos });
+            }),
             catchError((error) =>
               of(TodoActions.loadTodosFailure({ error: error.message })),
             ),
