@@ -21,6 +21,7 @@ export class TodoList implements OnInit {
 
   constructor(private store: Store) {
     this.todos$ = this.store.select(TodoSelectors.selectAllTodos);
+
     this.incompleteTodos$ = this.store.select(
       TodoSelectors.selectIncompleteTodos,
     );
@@ -31,9 +32,7 @@ export class TodoList implements OnInit {
     this.loading$ = this.store.select(TodoSelectors.selectTodosLoading);
   }
 
-  ngOnInit(): void {
-    this.store.dispatch(TodoActions.loadTodos());
-  }
+  ngOnInit(): void {}
   fetchTodos(): void {
     this.store.dispatch(TodoActions.loadTodos());
   }

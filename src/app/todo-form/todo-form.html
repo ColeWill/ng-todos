@@ -1,1 +1,64 @@
-<p>todo-form works!</p>
+<div class="grid grid-cols-2">
+  <form [formGroup]="todoForm" (ngSubmit)="addTodo()">
+    <div class="border rounded p-4 w-md">
+      <h3 class="text-3xl mb-5">Add a Todo</h3>
+      <!-- <div class="grid grid-cols-2 mb-2">
+      <label class="text-2xl" for="id">Todo Id: </label>
+      <input
+        class="border rounded p-2 bg-white text-black"
+        type="number"
+        formControlName="id"
+        id="id"
+        placeholder="Todo ID"
+      />
+    </div> -->
+      <div class="grid grid-cols-2 mb-2">
+        <label class="text-2xl" for="todo-description">Description: </label>
+        <input
+          class="border rounded p-2 bg-white text-black"
+          id="todo-description"
+          type="textarea"
+          formControlName="todo"
+          placeholder="Add a todo..."
+        />
+      </div>
+      <div class="grid grid-cols-2 mb-2">
+        <label for="completedCheckbox" class="text-2xl">Completed: </label>
+        <div>
+          <input
+            class="h-7 w-7"
+            type="checkbox"
+            formControlName="completed"
+            id="completedCheckbox"
+          />
+        </div>
+      </div>
+      <div class="grid grid-cols-2 mb-4">
+        <label for="userIdSelects" class="text-2xl">User ID:</label>
+        <select
+          class="bg-gray-100 border rounded text-black"
+          formControlName="userId"
+          id="userIdSelects"
+        >
+          <option [ngValue]="null" disabled>Select UserId</option>
+          @for (user of userIdSelects; track user.value) {
+            <option [value]="user.value">
+              {{ user.name }}
+            </option>
+          }
+        </select>
+      </div>
+      <div class="grid">
+        <button class="border rounded-sm p-2 cursor-pointer" type="submit">
+          Create Todo
+        </button>
+      </div>
+    </div>
+  </form>
+  <section>
+    <h2>List of created</h2>
+    @if (incompleteTodos$ | async; as incompleteTodos) {
+      <app-todo-list-li [todoList]="incompleteTodos"></app-todo-list-li>
+    }
+  </section>
+</div>
