@@ -1,9 +1,8 @@
 import { Component, OnInit, output } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Todo } from '../store/todo.model';
 import { Store } from '@ngrx/store';
-import { TodoActions } from '../store';
-import { TodoSelectors } from '../store';
+import { Todo, TodoSelectors, TodoActions } from '../store/';
+
 import { CommonModule } from '@angular/common';
 import { TodoListLi } from './todo-list-li/todo-list-li';
 
