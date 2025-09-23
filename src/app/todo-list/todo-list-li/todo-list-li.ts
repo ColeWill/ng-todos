@@ -1,5 +1,5 @@
 import { Component, input, output } from '@angular/core';
-import { Todo } from '../../todo-store/todo.model';
+import { Todo } from '../../store/todo-store/todo.model';
 import { CommonModule } from '@angular/common';
 
 @Component({

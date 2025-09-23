@@ -1,9 +1,8 @@
 import { Component, OnInit, output } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Todo } from '../todo-store/todo.model';
 import { Store } from '@ngrx/store';
-import * as TodoActions from '../todo-store/todo.actions';
-import * as TodoSelectors from '../todo-store/todo.selectors';
+import { Todo, TodoSelectors, TodoActions } from '../store/';
+
 import { CommonModule } from '@angular/common';
 import { TodoListLi } from './todo-list-li/todo-list-li';
 
@@ -22,6 +21,7 @@ export class TodoList implements OnInit {
 
   constructor(private store: Store) {
     this.todos$ = this.store.select(TodoSelectors.selectAllTodos);
+
     this.incompleteTodos$ = this.store.select(
       TodoSelectors.selectIncompleteTodos,
     );

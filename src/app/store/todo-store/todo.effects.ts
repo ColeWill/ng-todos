@@ -10,7 +10,7 @@ import {
   tap,
   startWith,
 } from 'rxjs/operators';
-import * as TodoActions from './todo.actions';
+import { TodoActions } from '../index';
 import { Todo } from './todo.model';
 
 interface DummyJsonResponse {
@@ -40,22 +40,32 @@ export class TodosEffects {
           return of(
             TodoActions.loadTodosFailure({
               error: 'HttpClient is not available',
-            })
+            }),
           );
         }
         return this.http
           .get<DummyJsonResponse>('https://dummyjson.com/todos')
           .pipe(
             // startWith([]),
-            delay(2000),
-            map((response) =>
-              TodoActions.loadTodosSuccess({ todos: response.todos })
-            ),
+            delay(0),
+            map((response) => {
+              const updatedTodos = response.todos.map((todo) => {
+                const createdAt = new Date().toISOString();
+                const dueDate = new Date();
+                dueDate.setDate(dueDate.getDate() + 7);
+                return {
+                  ...todo,
+                  createdAt,
+                  dueDate: dueDate.toISOString(),
+                };
+              });
+              return TodoActions.loadTodosSuccess({ todos: updatedTodos });
+            }),
             catchError((error) =>
-              of(TodoActions.loadTodosFailure({ error: error.message }))
-            )
+              of(TodoActions.loadTodosFailure({ error: error.message })),
+            ),
           );
-      })
-    )
+      }),
+    ),
   );
 }

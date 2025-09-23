@@ -10,8 +10,8 @@ import { routes } from './app.routes';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
-import { todoReducer } from './todo-store/todo.reducer';
-import { TodosEffects } from './todo-store/todo.effects';
+import { todoReducer } from './store/todo-store/todo.reducer';
+import { TodosEffects } from './store/todo-store/todo.effects';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
@@ -24,7 +24,7 @@ export const appConfig: ApplicationConfig = {
     provideStoreDevtools({
       maxAge: 25,
       logOnly: !isDevMode(),
-      connectInZone: true
+      connectInZone: true,
     }),
     provideHttpClient(withFetch()),
   ],

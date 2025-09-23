@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { Todo } from './todo.model';
-import * as TodoActions from './todo.actions';
+import { TodoActions } from '../index';
 
 export interface TodoState {
   todos: Todo[];
@@ -42,6 +42,14 @@ export const todoReducer = createReducer(
     return {
       ...state,
       todos: mutatedTodos,
+      loading: false,
+      error: null,
+    };
+  }),
+  on(TodoActions.addTodo, (state, { newTodo }) => {
+    return {
+      ...state,
+      todos: [...state.todos, newTodo],
       loading: false,
       error: null,
     };

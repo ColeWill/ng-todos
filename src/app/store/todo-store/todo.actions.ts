@@ -5,7 +5,7 @@ export const loadTodos = createAction('[Todo] Load Todos');
 
 export const addTodo = createAction(
   '[Todo] Add Todo',
-  props<{ text: string }>(),
+  props<{ newTodo: Todo }>(),
 );
 
 export const toggleTodo = createAction(
