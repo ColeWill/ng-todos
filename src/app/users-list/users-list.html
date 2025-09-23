@@ -1,1 +1,37 @@
-<p>users-list works!</p>
+<div class="grid grid-cols-2">
+  <section>
+    @if (users$ | async; as users) {
+      @for (user of users; track user.id) {
+        <ul class="border rounded mb-10">
+          <li>
+            <img
+              [src]="user.image"
+              [alt]="user.firstName"
+              class="w-16 h-16 rounded"
+            />
+          </li>
+          @for (item of user | keyvalue; track item.key) {
+            @if (typeof item.value !== "object") {
+              <li class="grid grid-cols-2">
+                <span>{{ item.key | titlecase }}:</span>
+                <span>{{ item.value }}</span>
+              </li>
+            } @else {
+              <li class="grid-grid-cols-2">
+                <span>{{ item.key | titlecase }}:</span>
+                <ul>
+                  @for (subItem of item.value | keyvalue; track subItem.key) {
+                    <li>
+                      <span>{{ subItem.key | titlecase }}:</span>
+                      <span>{{ subItem.value }}</span>
+                    </li>
+                  }
+                </ul>
+              </li>
+            }
+          }
+        </ul>
+      }
+    }
+  </section>
+</div>
