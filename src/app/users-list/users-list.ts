@@ -3,10 +3,11 @@ import { Observable } from 'rxjs';
 import { User, UserSelectors, UserActions } from '../store';
 import { Store } from '@ngrx/store';
 import { CommonModule } from '@angular/common';
+import { ObjectFlattenerPipe } from '../utilities/pipes/object-flattener.pipe';
 
 @Component({
   selector: 'app-users-list',
-  imports: [CommonModule],
+  imports: [CommonModule, ObjectFlattenerPipe],
   templateUrl: './users-list.html',
   styleUrl: './users-list.scss',
 })
