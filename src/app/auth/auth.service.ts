@@ -1,6 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
+import { Router } from '@angular/router';
+import {
+  BehaviorSubject,
+  catchError,
+  delay,
+  Observable,
+  tap,
+  throwError,
+} from 'rxjs';
 
 interface AuthResponse {
   accessToken: string;
@@ -12,6 +20,7 @@ interface AuthResponse {
 })
 export class AuthService {
   http = inject(HttpClient);
+  router = inject(Router);
   private loggedInSubject = new BehaviorSubject<boolean>(false);
   public isLoggedIn$: Observable<boolean> = this.loggedInSubject.asObservable();
 
@@ -31,6 +40,7 @@ export class AuthService {
         expiresInMins: 30,
       })
       .pipe(
+        delay(2000),
         tap((response) => {
           this.currentAccessToken = response.accessToken;
           this.loggedInSubject.next(true);
@@ -43,7 +53,10 @@ export class AuthService {
   }
 
   public logout(): void {
+    console.log('logging out');
     this.currentAccessToken = null;
     this.loggedInSubject.next(false);
+
+    this.router.navigate(['login']);
   }
 }
