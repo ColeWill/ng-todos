@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { User } from '../store';
+import { User } from '../../store';
 import { map, Observable } from 'rxjs';
 
 interface DummyJsonResponse {
