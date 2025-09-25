@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Todo } from '../store/todo-store/todo.model';
-import { TodoActions, TodoSelectors } from '../store';
+import { Todo } from '../../store/';
+import { TodoActions, TodoSelectors } from '../../store';
 
 import {
   FormBuilder,
@@ -12,7 +12,6 @@ import {
 import { Observable, Subject } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { TodoListLi } from '../todo-list/todo-list-li/todo-list-li';
-import { selectAllTodos } from '../store/todo-store/todo.selectors';
 
 interface SelectOption {
   name: string;

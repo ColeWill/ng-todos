@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User, UserSelectors, UserActions } from '../store';
+import { User, UserSelectors, UserActions } from '../../store';
 import { Store } from '@ngrx/store';
 import { CommonModule } from '@angular/common';
-import { ObjectFlattenerPipe } from '../utilities/pipes/object-flattener.pipe';
+import { ObjectFlattenerPipe } from '../../utilities/pipes/object-flattener.pipe';
 
 @Component({
   selector: 'app-users-list',
