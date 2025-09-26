@@ -25,10 +25,10 @@ export class LoginModal implements OnInit, OnDestroy {
   @Input() isVisible: boolean = false;
   loginForm!: FormGroup;
   errorMessage: string | null = null;
-  isLoading: boolean | false = false;
-  isLoggedIn!: boolean | false;
+  isLoading: boolean = false;
+  isLoggedIn: boolean = false;
   TODOS_PATH: string = paths.TODOS;
-  private subscriptions!: Subscription;
+  private subscriptions: Subscription = new Subscription();
   private authLoginSubscription!: Subscription;
   private isLoggedInSubscription!: Subscription;
 
@@ -44,7 +44,9 @@ export class LoginModal implements OnInit, OnDestroy {
       },
     );
 
-    this.subscriptions.add(this.isLoggedInSubscription);
+    if (this.subscriptions) {
+      this.subscriptions.add(this.isLoggedInSubscription);
+    }
   }
   onSubmit() {
     this.errorMessage = null;
