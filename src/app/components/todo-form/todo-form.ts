@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Todo } from '../../store/';
 import { TodoActions, TodoSelectors } from '../../store';
@@ -9,7 +9,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { TodoListLi } from '../todo-list/todo-list-li/todo-list-li';
 
@@ -24,9 +24,10 @@ interface SelectOption {
   templateUrl: './todo-form.html',
   styleUrl: './todo-form.scss',
 })
-export class TodoForm {
+export class TodoForm implements OnDestroy {
   private store = inject(Store);
   private fb = inject(FormBuilder);
+  private destroy$ = new Subject<void>();
 
   todoForm: FormGroup;
   allTodos$: Observable<Todo[]> | undefined;
@@ -48,6 +49,7 @@ export class TodoForm {
     this.buildUserSelectOptionsList();
     this.store
       .select(TodoSelectors.selectTotalTodosCount)
+      .pipe(takeUntil(this.destroy$))
       .subscribe((count) => {
         this.totalTodosCount = count;
       });
@@ -67,7 +69,7 @@ export class TodoForm {
     if (!this.allTodos$) {
       return;
     }
-    this.allTodos$.subscribe({
+    this.allTodos$.pipe(takeUntil(this.destroy$)).subscribe({
       next: (todos) => {
         const uniqueUserIds = new Set<number>();
         const userOptions: SelectOption[] = [];
@@ -104,5 +106,10 @@ export class TodoForm {
       this.store.dispatch(TodoActions.addTodo({ newTodo }));
       this.todoForm.reset({ id: 0, todo: '', completed: false, userId: null });
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
