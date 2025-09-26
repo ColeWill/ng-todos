@@ -53,7 +53,6 @@ export class AuthService {
   }
 
   public logout(): void {
-    console.log('logging out');
     this.currentAccessToken = null;
     this.loggedInSubject.next(false);
 

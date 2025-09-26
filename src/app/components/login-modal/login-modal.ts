@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -9,6 +9,7 @@ import { AuthService } from '../../auth/auth.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { paths } from '../../app.routes';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login-modal',
@@ -16,7 +17,7 @@ import { paths } from '../../app.routes';
   templateUrl: './login-modal.html',
   styleUrl: './login-modal.scss',
 })
-export class LoginModal implements OnInit {
+export class LoginModal implements OnInit, OnDestroy {
   fb = inject(FormBuilder);
   authService = inject(AuthService);
   router = inject(Router);
@@ -27,6 +28,9 @@ export class LoginModal implements OnInit {
   isLoading: boolean | false = false;
   isLoggedIn!: boolean | false;
   TODOS_PATH: string = paths.TODOS;
+  private subscriptions!: Subscription;
+  private authLoginSubscription!: Subscription;
+  private isLoggedInSubscription!: Subscription;
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -34,9 +38,13 @@ export class LoginModal implements OnInit {
       password: ['emilyspass', Validators.required],
     });
 
-    this.authService.isLoggedIn$.subscribe((val) => {
-      this.isLoggedIn = val;
-    });
+    this.isLoggedInSubscription = this.authService.isLoggedIn$.subscribe(
+      (val) => {
+        this.isLoggedIn = val;
+      },
+    );
+
+    this.subscriptions.add(this.isLoggedInSubscription);
   }
   onSubmit() {
     this.errorMessage = null;
@@ -44,16 +52,23 @@ export class LoginModal implements OnInit {
       this.loginForm.markAllAsTouched;
     }
     this.isLoading = true;
-    this.authService.login(this.loginForm.value).subscribe({
-      next: (result) => {
-        this.isLoading = false;
-        this.router.navigate([`${this.TODOS_PATH}`]);
-      },
-      error: (response) => {
-        this.isLoading = false;
-        this.errorMessage = response.message || 'an unknown error occurred';
-        console.error(response.message);
-      },
-    });
+    this.authLoginSubscription = this.authService
+      .login(this.loginForm.value)
+      .subscribe({
+        next: (result) => {
+          this.isLoading = false;
+          this.router.navigate([`${this.TODOS_PATH}`]);
+        },
+        error: (response) => {
+          this.isLoading = false;
+          this.errorMessage = response.message || 'an unknown error occurred';
+          console.error(response.message);
+        },
+      });
+    this.subscriptions.add(this.authLoginSubscription);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 }
