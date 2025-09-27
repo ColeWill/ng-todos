@@ -5,4 +5,5 @@ export interface Todo {
   userId: number;
   createdAt: string;
   dueDate: string;
+  timeRemaining?: { days: number; hours: number; minutes: number };
 }
