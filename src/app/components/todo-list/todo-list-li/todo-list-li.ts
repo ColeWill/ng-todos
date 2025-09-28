@@ -1,4 +1,4 @@
-import { Component, input, OnInit, output } from '@angular/core';
+import { Component, input, OnInit, output, computed } from '@angular/core';
 import { Todo } from '../../../store/';
 import { CommonModule } from '@angular/common';
 
@@ -12,17 +12,18 @@ import { CommonModule } from '@angular/common';
 export class TodoListLi implements OnInit {
   todoList = input.required<Todo[]>();
   toggleComplete = output<number>();
-  newImmutableTodoList!: Todo[];
 
-  ngOnInit() {
-    this.newImmutableTodoList = this.todoList().map((todo) => {
+  newImmutableTodoList = computed(() => {
+    return this.todoList().map((todo) => {
       const newTodo: Todo = {
         ...todo,
         timeRemaining: this.calculateTimeRemaining(todo.dueDate),
       };
       return newTodo;
     });
-  }
+  });
+
+  ngOnInit() {}
 
   calculateTimeRemaining(dueDate: any) {
     const endDate = new Date(dueDate);

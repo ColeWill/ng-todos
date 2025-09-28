@@ -2,14 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
-import {
-  map,
-  mergeMap,
-  catchError,
-  delay,
-  tap,
-  startWith,
-} from 'rxjs/operators';
+import { map, mergeMap, catchError, delay } from 'rxjs/operators';
 import { TodoActions } from '../index';
 import { Todo } from './todo.model';
 
@@ -46,16 +39,20 @@ export class TodosEffects {
         return this.http
           .get<DummyJsonResponse>('https://dummyjson.com/todos')
           .pipe(
-            // startWith([]),
             delay(0),
             map((response) => {
+              let dayOffset = 1;
+              const baseDate = new Date();
+
               const updatedTodos = response.todos.map((todo) => {
-                const createdAt = new Date().toISOString();
+                const createdAt = new Date(baseDate);
+                createdAt.setDate(baseDate.getDate() - dayOffset);
                 const dueDate = new Date();
                 dueDate.setDate(dueDate.getDate() + 7);
+                dayOffset += 1;
                 return {
                   ...todo,
-                  createdAt,
+                  createdAt: createdAt.toISOString(),
                   dueDate: dueDate.toISOString(),
                 };
               });

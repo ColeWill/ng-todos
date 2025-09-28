@@ -33,3 +33,15 @@ export const selectTotalTodosCount = createSelector(
   selectAllTodos,
   (todos: Todo[]) => todos.length,
 );
+
+export const createdAtSortedTodos$ = createSelector(
+  selectAllTodos,
+  (todos: Todo[]) => {
+    return [...todos].sort((a, b) => {
+      const dateA = new Date(a.createdAt).getTime();
+      const dateB = new Date(b.createdAt).getTime();
+
+      return dateB - dateA;
+    });
+  },
+);

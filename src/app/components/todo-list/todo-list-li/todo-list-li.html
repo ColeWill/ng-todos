@@ -1,5 +1,5 @@
 <ul>
-  @for (todo of newImmutableTodoList; track todo.id) {
+  @for (todo of newImmutableTodoList(); track todo.id) {
     <li class="flex flex-col p-2 border-b border-gray-100 align-top p-2">
       <div class="flex flex-row items-center mb-1">
         <input

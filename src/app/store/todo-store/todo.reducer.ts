@@ -33,10 +33,13 @@ export const todoReducer = createReducer(
     };
   }),
   on(TodoActions.toggleTodo, (state, { id }) => {
-    const mutatedTodos: Todo[] = state.todos.map(
-      (todo): Todo =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo,
-    );
+    const mutatedTodos: Todo[] = state.todos.map((todo): Todo => {
+      if (todo.id === id) {
+        const updatedTodo = { ...todo, completed: !todo.completed };
+        return updatedTodo;
+      }
+      return todo;
+    });
 
     return {
       ...state,
