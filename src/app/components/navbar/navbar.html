@@ -1,0 +1,46 @@
+<header class="bg-gray-700 p-4 flex justify-between items-center">
+  <div>
+    <h1 class="text-left text-3xl text-white">NG Todos</h1>
+  </div>
+  <div class="relative">
+    <button
+      (click)="toggleDropdown()"
+      class="border rounded-md p-2 text-white hover:bg-gray-600"
+    >
+      @if (isDropdownOpen()) {
+        <div class="px-2">X</div>
+      } @else {
+        <div class="w-6 h-6 flex flex-col justify-center space-y-1">
+          <span class="block w-6 h-0.5 bg-white"></span
+          ><span class="block w-6 h-0.5 bg-white"></span
+          ><span class="block w-6 h-0.5 bg-white"></span>
+        </div>
+      }
+    </button>
+
+    <div
+      class="absolute right-0 mt-2 w-70 bg-gray-700 rounded-md shadow-lg z-50 transform transition-all duration-200 border"
+      [class.opacity-0]="!isDropdownOpen()"
+      [class.opacity-100]="isDropdownOpen()"
+      [class.scale-95]="!isDropdownOpen()"
+      [class.scale-100]="isDropdownOpen()"
+      [class.pointer-events-none]="!isDropdownOpen()"
+    >
+      @for (link of componentLinks; track $index) {
+        <button
+          class="block w-full text-left px-4 py-2 text-white hover:bg-gray-100 rounded-t-md cursor-pointer border-b-1"
+          [routerLink]="link.routerLink"
+        >
+          {{ link.text }}
+        </button>
+      }
+
+      <button
+        (click)="onLogout()"
+        class="block w-full text-left px-4 py-2 text-white hover:bg-gray-100 rounded-t-md cursor-pointer border"
+      >
+        Logout
+      </button>
+    </div>
+  </div>
+</header>

@@ -6,13 +6,16 @@ import { LoginModal } from './components/login-modal/login-modal';
 import { NotFound } from './components/not-found/not-found';
 
 export const paths = {
-  TODOS: 'todos',
+  TODOS_LIST: 'todos',
+  TODO_FORM: 'createTodos',
+  USERS: 'users',
+  LOGIN: 'login',
 };
 
 export const routes: Routes = [
-  { path: paths.TODOS, component: TodoList },
-  { path: 'createTodos', component: TodoForm },
-  { path: 'users', component: UsersList },
-  { path: 'login', component: LoginModal },
+  { path: paths.TODOS_LIST, component: TodoList },
+  { path: paths.TODO_FORM, component: TodoForm },
+  { path: paths.USERS, component: UsersList },
+  { path: paths.LOGIN, component: LoginModal },
   { path: '**', component: NotFound },
 ];
