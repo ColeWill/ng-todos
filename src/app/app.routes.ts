@@ -3,6 +3,7 @@ import { TodoList } from './components/todo-list/todo-list';
 import { TodoForm } from './components/todo-form/todo-form';
 import { UsersList } from './components/users-list/users-list';
 import { LoginModal } from './components/login-modal/login-modal';
+import { NotFound } from './components/not-found/not-found';
 
 export const paths = {
   TODOS: 'todos',
@@ -13,4 +14,5 @@ export const routes: Routes = [
   { path: 'createTodos', component: TodoForm },
   { path: 'users', component: UsersList },
   { path: 'login', component: LoginModal },
+  { path: '**', component: NotFound },
 ];
