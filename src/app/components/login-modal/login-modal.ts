@@ -27,7 +27,7 @@ export class LoginModal implements OnInit, OnDestroy {
   errorMessage: string | null = null;
   isLoading: boolean = false;
   isLoggedIn: boolean = false;
-  TODOS_PATH: string = paths.TODOS;
+  TODOS_PATH: string = paths.TODOS_LIST;
   private subscriptions: Subscription = new Subscription();
   private authLoginSubscription!: Subscription;
   private isLoggedInSubscription!: Subscription;

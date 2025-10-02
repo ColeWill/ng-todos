@@ -15,14 +15,20 @@ import { userReducer } from './store/user-store/users.reducer';
 import { TodosEffects } from './store/todo-store/todo.effects';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { UsersEffects } from './store/user-store/users.effects';
+import { productReducer } from './store/product-store/products.reducer';
+import { ProductsEffects } from './store/product-store/product.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideStore({ todos: todoReducer, users: userReducer }),
-    provideEffects([TodosEffects, UsersEffects]),
+    provideStore({
+      todos: todoReducer,
+      users: userReducer,
+      products: productReducer,
+    }),
+    provideEffects([TodosEffects, UsersEffects, ProductsEffects]),
     provideStoreDevtools({
       maxAge: 25,
       logOnly: !isDevMode(),

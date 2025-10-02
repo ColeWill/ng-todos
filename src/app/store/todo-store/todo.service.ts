@@ -1,8 +1,7 @@
-import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, timer, interval, of } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { ajax, AjaxResponse } from 'rxjs/ajax';
-import { map, switchMap, startWith } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Todo } from './todo.model';
 
 @Injectable({ providedIn: 'root' })
@@ -11,7 +10,7 @@ export class TodoService {
 
   getTodos(): Observable<Todo[]> {
     return ajax<any>(this.apiUrl).pipe(
-      map((response: AjaxResponse<any>) => response.response.todos as Todo[])
+      map((response: AjaxResponse<any>) => response.response.todos as Todo[]),
     );
   }
 }
