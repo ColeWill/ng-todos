@@ -28,6 +28,10 @@ export class Navbar {
       text: 'users',
       routerLink: paths.USERS,
     },
+    {
+      text: 'products',
+      routerLink: paths.PRODUCTS,
+    },
   ];
 
   toggleDropdown(): void {

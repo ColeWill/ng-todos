@@ -4,7 +4,9 @@ export * as TodoSelectors from './todo-store/todo.selectors';
 export * as UserActions from './user-store/user.actions';
 export * as UserSelectors from './user-store/user.selectors';
 
-export * as ProductActions from './product-store/product.actions';
+import { ProductActions } from './product-store/product.actions';
+export { ProductActions };
+export * as ProductSelectors from './product-store/product.selectors';
 
 export * from './todo-store/todo.model';
 export * from './user-store/user.model';

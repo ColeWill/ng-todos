@@ -1,0 +1,43 @@
+@if (productState$ | async; as productState) {
+  {{ productState.error | json }}
+}
+<h1>Products List</h1>
+@if (latestProduct$ | async; as product) {
+  <div class="border p-3 mb-4">
+    <h1>Latest Product from API</h1>
+    <ul>
+      <li>Product Id: {{ product.id }}</li>
+      <li>
+        {{ product.title }}
+      </li>
+      <li>
+        {{ product.description }}
+      </li>
+      <li>
+        {{ product.category }}
+      </li>
+      <li>
+        {{ product.price }}
+      </li>
+    </ul>
+  </div>
+}
+@if (allProducts$ | async; as products) {
+  @for (product of products; track $index) {
+    <ul class="border p-3">
+      <li>Product Id: {{ product.id }}</li>
+      <li>
+        {{ product.title }}
+      </li>
+      <li>
+        {{ product.description }}
+      </li>
+      <li>
+        {{ product.category }}
+      </li>
+      <li>
+        {{ product.price }}
+      </li>
+    </ul>
+  }
+}

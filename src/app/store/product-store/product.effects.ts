@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { ProductActions } from '..';
+import { Product, ProductActions } from '../index';
 import { catchError, map, mergeMap, of } from 'rxjs';
 import { ProductService } from './product.service';
 
@@ -15,13 +15,26 @@ export class ProductsEffects {
 
   loadProducts$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ProductActions.loadProducts),
+      ofType(ProductActions.loadIndividualProduct),
       mergeMap(() =>
-        this.productService.getProducts().pipe(
-          map((products) => ProductActions.loadProductsSuccess({ products })),
+        this.productService.getProductsInInterval().pipe(
+          map((productOrError: Product | any) => {
+            if (productOrError && productOrError.name === 'AjaxError') {
+              const errorMessage = `API Request failed: ${productOrError.message} for URL: ${productOrError.request.url}`;
+              return ProductActions.loadIndividualProductsFailure({
+                error: errorMessage,
+              });
+            } else {
+              return ProductActions.loadIndividualProductsSuccess({
+                product: productOrError,
+              });
+            }
+          }),
           catchError((error) =>
             of(
-              ProductActions.loadProductsFailure({ error: error.errorMessage }),
+              ProductActions.loadIndividualProductsFailure({
+                error: error.errorMessage || 'An unknown error occurred',
+              }),
             ),
           ),
         ),

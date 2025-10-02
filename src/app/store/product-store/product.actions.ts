@@ -1,14 +1,14 @@
-import { createAction, props } from '@ngrx/store';
+import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { Product } from './product.model';
 
-export const loadProducts = createAction('[Products] Load Products');
-
-export const loadProductsSuccess = createAction(
-  '[Products] Load Products Success',
-  props<{ products: Product[] }>(),
-);
-
-export const loadProductsFailure = createAction(
-  '[Products] Load Products Failure',
-  props<{ error: string }>(),
-);
+export const ProductActions = createActionGroup({
+  source: 'Products',
+  events: {
+    // these will be renamed to camelcase w/ no spaces
+    'Load Individual Product': emptyProps(),
+    'Load Individual Products Success': props<{
+      product: Product;
+    }>(),
+    'Load Individual Products Failure': props<{ error: string }>(),
+  },
+});
